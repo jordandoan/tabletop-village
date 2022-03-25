@@ -5,6 +5,8 @@ const auth = require("../utils/createAuthJWT");
 const router = express.Router();
 router.post("/", (req, res) => {
   const body = req.body;
+  let total = 0.02*Number(body.commonUncommons) + 0.04*Number(body.rareFoils) + 0.75*Number(body.v) + (Number(body.vmax) + Number(body.gx));
+  total = Math.floor(total*100)/100;
   const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.append({
   auth: auth,
@@ -13,13 +15,12 @@ router.post("/", (req, res) => {
   range: "Sheet1",
   resource: 
     { 
-      values: [[body.name, body.email, body.commonUncommons, body.rareFoils, body.v, body.vmax, body.gx]]
+      values: [[body.name, body.email, body.commonUncommons, body.rareFoils, body.v, body.vmax, body.gx, total]]
     }
   }, (err, res) => {
-  console.log(res);
   if (err) return console.log("API Returned an error: " + err);
   })
-  res.json({success: "Bulk submission received"})
+  res.json({success: "Bulk submission received! Total: " + total})
 });
 
 module.exports = router;
