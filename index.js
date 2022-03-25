@@ -1,10 +1,8 @@
 require('dotenv').config();
-const {google} = require('googleapis');
 const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
 const bulkRouter = require("./api/bulkSubmissionForm");
-const auth = require("./utils/createAuthJWT.js");
 
 const app = express();
 app.use(helmet());
