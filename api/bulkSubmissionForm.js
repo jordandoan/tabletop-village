@@ -5,7 +5,7 @@ const auth = require("../utils/createAuthJWT");
 const router = express.Router();
 router.post("/", (req, res) => {
   const body = req.body;
-  let total = 0.01*Number(body.commonUncommons) + 0.04*Number(body.rareFoils) + 0.75*Number(body.v) + (Number(body.vmax) + Number(body.gx));
+  let total = 0.01*Number(body.commonUncommons) + 0.04*Number(body.rareFoils) + 0.50*Number(body.v) + (Number(body.vmax) + Number(body.gx));
   total = Math.floor(total*100)/100;
   const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.append({
